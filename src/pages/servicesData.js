@@ -51,7 +51,7 @@ const services = [
   {
     slug: "specializedCare",
     icon: "caregiving",
-    title: "Caregiving for Children and Persons with Disabilities",
+    title: "Child & Disabled Care",
     description:
       "Support for the unique needs of children and persons with disabilities, including specialized care and assistance with daily activities in home and out of home.",
   },
