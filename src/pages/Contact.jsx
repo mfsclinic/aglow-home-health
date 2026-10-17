@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react"
-import services from "./servicesData.js"
-import contactImg from "../assets/contact-img.webp"
-import emailjs from "@emailjs/browser"
+import { useState, useEffect } from "react";
+import services from "./servicesData.js";
+import contactImg from "../assets/contact-img.webp";
+import emailjs from "@emailjs/browser";
 
-const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 function Contact() {
   useEffect(() => {
-    document.title = "Contact Us | Aglow Home Health"
-  }, [])
+    document.title = "Contact Us | Aglow Home Health";
+  }, []);
 
   const [form, setForm] = useState({
     firstName: "",
@@ -20,21 +20,21 @@ function Contact() {
     service: "",
     bestTime: "",
     message: "",
-  })
-  const [submitting, setSubmitting] = useState(false)
-  const [status, setStatus] = useState(null) // "sent" | "error" | null
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState(null); // "sent" | "error" | null
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    setForm({ ...form, [e.target.name]: e.target.value });
   }
 
   function handleSubmit(e) {
-    e.preventDefault()
-    setSubmitting(true)
-    setStatus(null)
+    e.preventDefault();
+    setSubmitting(true);
+    setStatus(null);
 
-    const serviceLabel = services.find((s) => s.slug === form.service)
-    const serviceText = serviceLabel ? serviceLabel.title : form.service
+    const serviceLabel = services.find((s) => s.slug === form.service);
+    const serviceText = serviceLabel ? serviceLabel.title : form.service;
 
     emailjs
       .send(
@@ -54,7 +54,7 @@ function Contact() {
       )
       .then(
         () => {
-          setStatus("sent")
+          setStatus("sent");
           setForm({
             firstName: "",
             lastName: "",
@@ -63,14 +63,14 @@ function Contact() {
             service: "",
             bestTime: "",
             message: "",
-          })
+          });
         },
         (error) => {
-          console.error("EmailJS send failed:", error)
-          setStatus("error")
+          console.error("EmailJS send failed:", error);
+          setStatus("error");
         },
       )
-      .finally(() => setSubmitting(false))
+      .finally(() => setSubmitting(false));
   }
 
   return (
@@ -87,52 +87,127 @@ function Contact() {
           <div className="contact-intro">
             <h2>Contact Us</h2>
             <p>
-              For questions or assistance, please complete the form below. Our team will take the time
-              to understand your needs, answer your questions, and help you explore the care options available.
-              If appropriate, one of our nurses may arrange an in-home consultation to discuss your situation,
-              assess the home environment, and recommend the level of support that best fits your needs or the needs
-              of your loved one.
+              For questions or assistance, please complete the form below. Our
+              team will take the time to understand your needs, answer your
+              questions, and help you explore the care options available. If
+              appropriate, one of our nurses may arrange an in-home consultation
+              to discuss your situation, assess the home environment, and
+              recommend the level of support that best fits your needs or the
+              needs of your loved one.
             </p>
             <p>
-              We strive to respond to all inquires within two business days. For faster support, 
-              please call us at <b>(403)-375-7242</b>. We look forward to speaking with you. 
+              We strive to respond to all inquiries within two business days.
+              For faster support, please call us at{" "}
+              <a href="tel:+14033757242">
+                <b>(403) 375-7242</b>
+              </a>
+              . We look forward to speaking with you.
             </p>
+
+            <dl className="contact-details">
+              <div>
+                <dt>Phone</dt>
+                <dd>
+                  <a href="tel:+14033757242">(403) 375-7242</a>
+                </dd>
+              </div>
+              <div>
+                <dt>Email</dt>
+                <dd>
+                  <a href="mailto:info@aglowhomehealth.com">
+                    info@aglowhomehealth.com
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt>Fax (for referrals)</dt>
+                <dd>(403) 375-7755</dd>
+              </div>
+            </dl>
+            {/* <br></br>
+            <a
+              className="contact-book-btn contact-book-btn--outline"
+              href="https://your-booking-link.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Book a Consultation
+            </a> */}
           </div>
 
           <form className="contact-form" onSubmit={handleSubmit}>
             <label>
-              <span>First Name <abbr title="Required">*</abbr></span>
-              <input type="text" name="firstName" required value={form.firstName} onChange={handleChange} />
+              <span>
+                First Name <abbr title="Required">*</abbr>
+              </span>
+              <input
+                type="text"
+                name="firstName"
+                required
+                value={form.firstName}
+                onChange={handleChange}
+              />
             </label>
 
             <label>
-              <span>Last Name <abbr title="Required">*</abbr></span>
-              <input type="text" name="lastName" required value={form.lastName} onChange={handleChange} />
+              <span>
+                Last Name <abbr title="Required">*</abbr>
+              </span>
+              <input
+                type="text"
+                name="lastName"
+                required
+                value={form.lastName}
+                onChange={handleChange}
+              />
             </label>
 
             <label>
-              <span>Email <abbr title="Required">*</abbr></span>
-              <input type="email" name="email" required value={form.email} onChange={handleChange} />
+              <span>
+                Email <abbr title="Required">*</abbr>
+              </span>
+              <input
+                type="email"
+                name="email"
+                required
+                value={form.email}
+                onChange={handleChange}
+              />
             </label>
 
             <label>
               <span>Phone</span>
-              <input type="tel" name="phone" value={form.phone} onChange={handleChange} />
+              <input
+                type="tel"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+              />
             </label>
 
             <label>
               <span>Service</span>
-              <select name="service" value={form.service} onChange={handleChange}>
+              <select
+                name="service"
+                value={form.service}
+                onChange={handleChange}
+              >
                 <option value="">-- Select a service --</option>
                 {services.map((s) => (
-                  <option key={s.slug} value={s.slug}>{s.title}</option>
+                  <option key={s.slug} value={s.slug}>
+                    {s.title}
+                  </option>
                 ))}
               </select>
             </label>
 
             <label>
               <span>Best Time to Call</span>
-              <select name="bestTime" value={form.bestTime} onChange={handleChange}>
+              <select
+                name="bestTime"
+                value={form.bestTime}
+                onChange={handleChange}
+              >
                 <option value="">-- Select a time --</option>
                 <option value="morning">Morning</option>
                 <option value="afternoon">Afternoon</option>
@@ -140,33 +215,45 @@ function Contact() {
             </label>
 
             <label className="span-2">
-              <span>Message <abbr title="Required">*</abbr></span>
-              <textarea name="message" rows={5} required value={form.message} onChange={handleChange} />
+              <span>
+                Message <abbr title="Required">*</abbr>
+              </span>
+              <textarea
+                name="message"
+                rows={5}
+                required
+                value={form.message}
+                onChange={handleChange}
+              />
             </label>
 
             {status === "sent" && (
               <div className="span-2 form-status form-status--success">
-                Thanks! Your message has been sent. We'll get back to you within two business days.
+                Thanks! Your message has been sent. We'll get back to you within
+                two business days.
               </div>
             )}
             {status === "error" && (
               <div className="span-2 form-status form-status--error">
-                Something went wrong. Please try again or call us at (403)-375-7242.
+                Something went wrong. Please try again or call us at
+                (403)-375-7242.
               </div>
             )}
 
             <div className="span-2">
-              <button type="submit" className="contact-submit" disabled={submitting}>
+              <button
+                type="submit"
+                className="contact-submit"
+                disabled={submitting}
+              >
                 {submitting ? "Sending..." : "Submit"}
               </button>
             </div>
-            
           </form>
-          
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Contact
+export default Contact;
